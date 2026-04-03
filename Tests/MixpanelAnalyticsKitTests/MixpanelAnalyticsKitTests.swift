@@ -52,4 +52,15 @@ struct MixpanelAnalyticsKitTests {
             ]
         )
     }
+
+    @Test("Analytics derives a platform-specific default source")
+    func analyticsUsesPlatformSpecificDefaults() {
+        #if targetEnvironment(macCatalyst)
+        #expect(Analytics.defaultPlatformName() == "macCatalyst")
+        #elseif os(macOS)
+        #expect(Analytics.defaultPlatformName() == "macOS")
+        #elseif os(iOS)
+        #expect(Analytics.defaultPlatformName() == "iOS")
+        #endif
+    }
 }

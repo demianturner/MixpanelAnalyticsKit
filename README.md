@@ -1,8 +1,8 @@
 # MixpanelAnalyticsKit
 
-Reusable Mixpanel analytics wiring for Swift apps.
+Reusable Mixpanel analytics wiring for Swift apps on iOS and macOS.
 
-`MixpanelAnalyticsKit` keeps the analytics client setup and event dispatch generic, while letting each app define its own event enum locally.
+`MixpanelAnalyticsKit` keeps the analytics client setup and event dispatch generic, while letting each app define its own event enum locally. Default super properties now derive the runtime platform automatically, so macOS apps report `macOS` instead of inheriting iOS-specific metadata.
 
 ## Usage
 

@@ -26,12 +26,13 @@ public enum Analytics {
 
         let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? ""
         let build = Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? ""
+        let platform = defaultPlatformName()
 
         var superProps: [String: any MixpanelType] = [
             "app_version": appVersion,
             "build": build,
-            "platform": "iOS",
-            "source": "iOS",
+            "platform": platform,
+            "source": platform,
             "is_debug": _isDebugAssertConfiguration(),
         ]
         superProps.merge(makeMixpanelProperties(from: extraSuperProps)) { _, new in new }
@@ -85,6 +86,24 @@ public enum Analytics {
         }
 
         return mixpanelProps
+    }
+
+    static func defaultPlatformName() -> String {
+        #if targetEnvironment(macCatalyst)
+        "macCatalyst"
+        #elseif os(macOS)
+        "macOS"
+        #elseif os(iOS)
+        "iOS"
+        #elseif os(tvOS)
+        "tvOS"
+        #elseif os(watchOS)
+        "watchOS"
+        #elseif os(visionOS)
+        "visionOS"
+        #else
+        "unknown"
+        #endif
     }
 }
 
